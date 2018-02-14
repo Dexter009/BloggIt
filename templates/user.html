@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="panel right">
+        <img style="height:inherit;width:inherit;" src="/media/upload/here/{{ user.profile.pk}}.jpg"/>
+    </div>
+
+
+        <h1>{{ user.username}}'s Feeds</h1>
+        {% for feeds in feedss %}
+<div class="panel left">
+        <div class="feedsWrapper">
+            <a href="/users/{{ user.username }}">
+
+                <span class="name">{{ feeds.user.first_name }} {{ feeds.user.last_name }}</span>
+            </a>
+            <b>@{{ feeds.user.username }}</b>
+            <span class="time">{{ feeds.creation_date|timesince }}</span>
+            <p>{{ feeds.content }}</p>
+        </div>
+
+    </div>
+{% endfor %}
+
+{% endblock %}

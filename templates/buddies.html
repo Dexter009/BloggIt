@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block login %}
+    {% with user.username as username %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+ 
+{% block content %}
+    <div class="panel right">
+        <h1>Create a BlogPost</h1>
+        <p>
+            <form action="/submit" method="post">
+            {% for field in feeds_form %}{% csrf_token %}
+            {{ field }}
+            {% endfor %}
+            <input type="hidden" value="{{ next_url }}" name="next_url">
+            <input type="submit" value="Post!">
+            </form>
+        </p>
+    </div>
+        <h1>Feeds</h1>
+        {% for feeds in feedss %}
+<div class="panel left">
+
+        <div class="feedsWrapper">
+            <a href="/users/{{ feeds.user.username }}">
+
+                <span class="name">{{ feeds.user.first_name }} {{ feeds.user.last_name }}</span>
+            </a>
+            <b>@{{ feeds.user.username }}</b>
+            <p>
+                {{ feeds.content }}
+
+            </p>
+
+        </div>
+</div>
+{% endfor %}
+{% endblock %}

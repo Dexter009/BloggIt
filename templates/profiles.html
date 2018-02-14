@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block login %}
+    {% with user.username as username %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+ 
+{% block content %}
+
+{% for user in users %}
+
+    <div class="panel left">
+
+        <h1>{{ user.username }} 's Profile</h1>
+        <div class="feedsWrapper">
+            <a href="/users/{{ user.username }}">
+
+                <span class="name">{{ user.first_name }} {{ user.last_name }} </span>
+            </a>
+                @{{ user.username }}
+            <p>
+                {{ feedss.count }} Feeds
+                <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
+                <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
+            </p>
+
+
+            <form action="/follow" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="follow" value="{{ user.id }}">
+                <input type="submit" value="Follow">
+            </form>
+
+        </div>
+    </div>
+ {% endfor %}
+
+{% endblock %}

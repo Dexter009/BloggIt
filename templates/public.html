@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+    <div class="panel right">
+        <h1>Create a Post</h1>
+        <p>
+            <form action="/submit" method="post">
+            {% for field in feeds_form %}{% csrf_token %}
+            {{ field }}
+            {% endfor %}
+            <input type="hidden" value="{{ next_url }}" name="next_url">
+            <input type="submit" value="Post!">
+            </form>
+        </p>
+    </div>
+<h1>Public Feeds</h1>
+        {% for feeds in feedss %}
+    <div class="panel left">
+
+        <div class="feedsWrapper">
+            <img class="avatar" src="{{ feeds.user.profile.gravatar_url }}">
+            <span class="name"><h4>{{ feeds.user.first_name }} {{ feeds.user.last_name }}</h4></span>
+            <b>@{{ feeds.user.username }}</b>
+            <span class="time">{{ feeds.creation_date|timesince }}</span>
+            <p>{{ feeds.content }}</p>
+            <p></p>
+        </div>
+
+    </div>
+{% endfor %}
+{% endblock %}
